@@ -1,8 +1,8 @@
-const asyncHandler = require('../utils/asyncHandler');
+
 
 const jwt = require('jsonwebtoken');
 
-const auth = asyncHandler((req, res, next) => {
+const auth = (req, res, next) => {
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
@@ -24,6 +24,6 @@ const auth = asyncHandler((req, res, next) => {
 
     req.user = decoded;
     next();
-});
+};
 
 module.exports = auth
