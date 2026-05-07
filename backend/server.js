@@ -9,6 +9,7 @@ const notificationRouter = require('./src/routes/notification.routes');
 const replyRouter = require('./src/routes/reply.routes');
 const searchRouter = require('./src/routes/search.routes');
 
+const errorHandler = require('./src/middlewares/error.middleware');
 
 require('dotenv').config();
 app.use(express.json());
@@ -17,15 +18,14 @@ app.get('/health', (req, res) => {
     res.send('OK');
 })
 
-app.use('/api');
+app.use('/api/auth', authRouter);
+app.use('/api/admin', adminRouter);
+app.use('/api/posts', PostRouter);
+app.use('/api/notifications', notificationRouter);
+app.use('/api', replyRouter);
+app.use('/api', searchRouter);
 
-app.use('/auth', authRouter);
-app.use('/admin', adminRouter);
-app.use('/posts', PostRouter);
-app.use('/notifications', notificationRouter);
-app.use('/', replyRouter);
-app.use('/', searchRouter);
-
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 8080;
 
